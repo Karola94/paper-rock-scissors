@@ -8,38 +8,39 @@
      <meta name="author" content="Karolina Kuchta">
 
      <meta http-equiv="X-Ua-Compatible" content="IE=edge">
-     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
      <link rel="stylesheet" href="css/style.css">
      
   </head>
   <body>
-    <div class="col-12">
+      <div>
         <h1>Play Paper Rock Scissors</h1>
       </div>
       <div id="container" class="container">  
-        <div class="col-12">
+        <div class="wrapper">
           <h3 id="winningGamesNumber"></h3>
         </div>
-        <div class="col-12 scoreBoard">
+        <div class="wrapper scoreBoard">
           <div id="result"></div>
           <div id="userScore" class="score">user</div>
           <div id="compScore" class="score">comp</div>
         </div>
-        <div class="col-12">
-          <button type="button" id="papier" onClick="playerMove(this.id)" class="btn btn-primary">PAPER</button>
-          <button type="button" id="kamien" onClick="playerMove(this.id)" class="btn btn-secondary">ROCK</button>
-          <button type="button" id="nozyce" onClick="playerMove(this.id)" class="btn btn-info">SCISSORS</button>
+        <div class="wrapper">
+          <button type="button" id="papier" data-move="papier" class="btn btn-primary player-move">PAPER</button>
+          <button type="button" id="kamien" data-move="kamien" class="btn btn-secondary player-move">ROCK</button>
+          <button type="button" id="nozyce" data-move="nozyce" class="btn btn-info player-move">SCISSORS</button>
         </div>
-        <div class="col-12">
+        <div class="wrapper">
           <div id="output"></div>
         </div>
       </div>
-      <div class="col-12">
+      <div>
         <button type="button" onClick="askNumberOfGames()" id="new-game" class="btn btn-warning">New Game</button>
       </div>
 
-      <script src="vendor/jquery/dist/jquery.min.js"></script>
-      <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script src="js/script.js"></script>
   </body>
 
