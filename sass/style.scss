@@ -98,8 +98,8 @@ body {
   
   .modal {
     display: none;    
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 800px;
+    max-height: 800px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -132,18 +132,35 @@ body {
     .content {
       min-height: 30px;
       padding: 0 20px 30px 20px;        
-    }  
-    .tr {
-      min-height: 10px;
-      min-width: 10px;
-      display: block;
-        border: 1px solid white;
-        background-color: #000;
-      .td {
-        min-height: 10px;
-        border: 1px solid #000;
-      }
     } 
+    table {      
+      padding: 0 20px;
+      display: table;
+      border-collapse: collapse;
+
+      thead {
+        th {          
+          height: 30px;
+          border: 1px solid white;
+          padding: 5px;
+        } 
+      }
+      tbody {
+        tr {
+          width: 100%;
+          min-height: 10px;
+          min-width: 100px;                     
+    
+          td {
+            height: 20px;                      
+            border: 1px solid white;
+            padding: 5px;
+          }
+        } 
+      }
+      
+    }
+    
   }
   .win {
     background: rgba(0, 128, 0, 0.3);

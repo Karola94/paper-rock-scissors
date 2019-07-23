@@ -80,19 +80,20 @@ function playerMove(moveId){
     params.output.classList.add('draw');
   }  
   params.result.innerHTML = params.playerScore + " : " + params.computerScore; 
+  params.clickCount++ 
   
   function gameOver() {
     params.moves.forEach(move => move.setAttribute('disabled', 'true'));   
-    params.container.classList.add('endGame');    
+    params.container.classList.add('endGame');   
+    
+    var outputColor = params.output.getAttribute('class');
     
     //Modals
     (function(){       
 
       function showModal(event){		
         event.preventDefault();
-        params.modals.forEach(modal => modal.classList.remove('show'));            
-        
-        var outputColor = params.output.getAttribute('class');
+        params.modals.forEach(modal => modal.classList.remove('show'));         
 
         for(var s=0; s<params.modals.length; s++){     
           if(params.modals[s].id === outputColor){        
@@ -125,6 +126,47 @@ function playerMove(moveId){
       }
       
     })();
+
+    //Score table display
+    var table = document.createElement('table');
+    var thead = document.createElement('thead');
+    var trh = document.createElement('tr');
+    var tbody = document.createElement('tbody');
+
+    for(var n=0; n<params.modals.length; n++){         
+      if(params.modals[n].id === outputColor){
+        params.modals[n].appendChild(table);
+        table.appendChild(thead);
+        thead.appendChild(trh);
+        table.appendChild(tbody);
+      }
+    }
+    for(var h=0; h<5; h++){
+      var th = document.createElement('th');
+      th.id = 'th'+ h;
+      trh.appendChild(th);
+    }
+    document.getElementById('th0').innerHTML = 'Nr rundy';
+    document.getElementById('th1').innerHTML = 'Ruch gracza';
+    document.getElementById('th2').innerHTML = 'Ruch komputera';
+    document.getElementById('th3').innerHTML = 'Wynik rundy';
+    document.getElementById('th4').innerHTML = 'Wynik gry po tej rundzie';
+    
+    for(var j=0; j<params.clickCount; j++){      
+      var tr = document.createElement('tr');            
+
+      for(var m=0; m<params.modals.length; m++){         
+        if(params.modals[m].id === outputColor){
+          tbody.appendChild(tr); 
+
+          for(var z=0; z<5; z++){
+            var td = document.createElement('td');            
+            tr.appendChild(td);        
+          }
+        }              
+      }     
+      
+    } 
     
   }
   
@@ -145,7 +187,7 @@ function playerMove(moveId){
       clickButtonAfterEndGame();           
     }   
 
-    //Score table
+    //Score table variables
     var roundNumber = function(){
       for(var r=0; r<=params.rounds; r++){
         return r;
@@ -172,35 +214,16 @@ function playerMove(moveId){
       compMove: cMove,
       roundScore: params.output.getAttribute('class'),
       gameScore: params.playerScore + " : " + params.computerScore
-    };
+    };    
   
-    params.clickCount++;
-    console.log(params.clickCount);
-    
-      for(var j=0; j<params.clickCount; j++){      
-        var tr = document.createElement('tr');
-        tr.className = 'tr';
-        params.modals[0].appendChild(tr);
-        //params.modals[1].appendChild(tr);
+}   
 
-        // for(var m=0; m<params.modals.length; m++){         
-        //   params.modals[m].appendChild(tr);        
-        // }
-        
-        // for(var z=0; z<5; z++){
-        //   var td = document.createElement('td');
-        //   td.className = 'td';
-        //   tr.appendChild(td);        
-        // }
-        
-      }      
-      
-  
-}
 
 for(var i=0; i<params.moves.length; i++){
   params.moves[i].addEventListener('click', function(event){  
     var dataMove = event.target.getAttribute('data-move');
-    playerMove(dataMove);    
+    playerMove(dataMove);  
+    console.log(params.clickCount);   
   });
 }
+
