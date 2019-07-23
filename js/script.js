@@ -81,7 +81,51 @@ function playerMove(moveId){
   
   function gameOver() {
     params.moves.forEach(move => move.setAttribute('disabled', 'true'));   
-    params.container.classList.add('endGame');
+    params.container.classList.add('endGame');    
+    
+    //Modals
+    (function(){ 
+
+      var modals = document.querySelectorAll('.modal');  
+
+      function showModal(event){		
+        event.preventDefault();
+        modals.forEach(modal => modal.classList.remove('show'));            
+        
+        var outputColor = params.output.getAttribute('class');
+
+        for(var s=0; s<modals.length; s++){     
+          if(modals[s].id === outputColor){        
+              modals[s].classList.add('show');          
+          }
+        }
+
+        document.querySelector('#modal-overlay').classList.add('show');
+      } 
+
+      showModal(event);
+      
+      var hideModal = function(event){
+        event.preventDefault();
+        document.querySelector('#modal-overlay').classList.remove('show');
+      };
+      
+      var closeButtons = document.querySelectorAll('.modal .close');
+      
+      for(var i = 0; i < closeButtons.length; i++){
+        closeButtons[i].addEventListener('click', hideModal);
+      }
+      
+      document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+      
+      for(var i = 0; i < modals.length; i++){
+        modals[i].addEventListener('click', function(event){
+          event.stopPropagation();
+        });
+      }
+      
+    })();
+    
   }
   
   function clickButtonAfterEndGame() {      
@@ -114,47 +158,47 @@ for(var i=0; i<params.moves.length; i++){
 
 //Modals
 
-(function(){ 
+// (function(){ 
 	
-	var modals = document.querySelectorAll('.modal');
+// 	var modals = document.querySelectorAll('.modal');
   
-  var modalLinks = document.querySelectorAll('.show-modal');
+//   var modalLinks = document.querySelectorAll('.show-modal');
   
-	var showModal = function(event){		
-    event.preventDefault();
-    modals.forEach(modal => modal.classList.remove('show'));            
-    var classFromHref = event.target.getAttribute('href').substr(1);
+// 	var showModal = function(event){		
+//     event.preventDefault();
+//     modals.forEach(modal => modal.classList.remove('show'));            
+//     var classFromHref = event.target.getAttribute('href').substr(1);
    
-    for(var s=0; s<modals.length; s++){     
-      if(modals[s].id === classFromHref){        
-          modals[s].classList.add('show');          
-      }
-    }
-		document.querySelector('#modal-overlay').classList.add('show');
-	};
+//     for(var s=0; s<modals.length; s++){     
+//       if(modals[s].id === classFromHref){        
+//           modals[s].classList.add('show');          
+//       }
+//     }
+// 		document.querySelector('#modal-overlay').classList.add('show');
+// 	};
 	
 		
-	for(var i = 0; i < modalLinks.length; i++){
-		modalLinks[i].addEventListener('click', showModal);
-	}
+// 	for(var i = 0; i < modalLinks.length; i++){
+// 		modalLinks[i].addEventListener('click', showModal);
+// 	}
 	
-	var hideModal = function(event){
-		event.preventDefault();
-		document.querySelector('#modal-overlay').classList.remove('show');
-	};
+// 	var hideModal = function(event){
+// 		event.preventDefault();
+// 		document.querySelector('#modal-overlay').classList.remove('show');
+// 	};
 	
-	var closeButtons = document.querySelectorAll('.modal .close');
+// 	var closeButtons = document.querySelectorAll('.modal .close');
 	
-	for(var i = 0; i < closeButtons.length; i++){
-		closeButtons[i].addEventListener('click', hideModal);
-	}
+// 	for(var i = 0; i < closeButtons.length; i++){
+// 		closeButtons[i].addEventListener('click', hideModal);
+// 	}
 	
-	document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+// 	document.querySelector('#modal-overlay').addEventListener('click', hideModal);
 	
-	for(var i = 0; i < modals.length; i++){
-		modals[i].addEventListener('click', function(event){
-			event.stopPropagation();
-		});
-	}
+// 	for(var i = 0; i < modals.length; i++){
+// 		modals[i].addEventListener('click', function(event){
+// 			event.stopPropagation();
+// 		});
+// 	}
 
-})(); 
+// })(); 

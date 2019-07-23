@@ -97,16 +97,20 @@ body {
   }
   
   .modal {
-    display: none;
-    background: #fff;
-    width: 200px;
+    display: none;    
+    max-width: 400px;
+    max-height: 250px;
     position: absolute;
     top: 50%;
     left: 50%;
+    color: white;
     transform: translate3d(-50%, -50%, 0);
   
     &.show {
-      display: block;
+      display: flex; 
+      flex-wrap: wrap;     
+      align-items: center;
+      justify-content: center;
     }
     
     .close {
@@ -116,19 +120,24 @@ body {
       padding: 5px;
       color: #000;
       text-decoration: none;
-    }
-    
-    header {
+    }    
+    header {        
       font-size: 20px;
       line-height: 30px;
       min-height: 30px;
       font-weight: bold;
       padding: 0 30px;
     }
-  
+    
     .content {
       min-height: 30px;
-      padding: 5px 30px;
-    }
+      padding: 0 20px 30px 20px;        
+    }   
+  }
+  .win {
+    background: rgba(0, 128, 0, 0.3);
+  }
+  .lose {
+    background: rgba(255, 0, 0, 0.3);
   }
 }

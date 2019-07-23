@@ -109,16 +109,20 @@ body .overlay.show {
 
 body .modal {
   display: none;
-  background: #fff;
-  width: 200px;
+  max-width: 400px;
+  max-height: 250px;
   position: absolute;
   top: 50%;
   left: 50%;
+  color: white;
   transform: translate3d(-50%, -50%, 0);
 }
 
 body .modal.show {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 body .modal .close {
@@ -140,7 +144,15 @@ body .modal header {
 
 body .modal .content {
   min-height: 30px;
-  padding: 5px 30px;
+  padding: 0 20px 30px 20px;
+}
+
+body .win {
+  background: rgba(0, 128, 0, 0.3);
+}
+
+body .lose {
+  background: rgba(255, 0, 0, 0.3);
 }
 
 /*# sourceMappingURL=style.css.map */
