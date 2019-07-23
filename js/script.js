@@ -3,9 +3,12 @@ var params = {
   result: document.getElementById('result'),
   container: document.getElementById('container'),
   moves: document.querySelectorAll('.player-move'),
+  modals: document.querySelectorAll('.modal'), 
   playerScore: 0,
   computerScore: 0,
-  rounds: null
+  rounds: null,
+  progress: [],
+  clickCount: 0
 }
 
 //Funkcja new game
@@ -76,27 +79,24 @@ function playerMove(moveId){
     params.output.innerHTML = 'DRAW <br>you played SCISSORS, computer played SCISSORS';
     params.output.classList.add('draw');
   }  
-
-  params.result.innerHTML = params.playerScore + " : " + params.computerScore;
+  params.result.innerHTML = params.playerScore + " : " + params.computerScore; 
   
   function gameOver() {
     params.moves.forEach(move => move.setAttribute('disabled', 'true'));   
     params.container.classList.add('endGame');    
     
     //Modals
-    (function(){ 
-
-      var modals = document.querySelectorAll('.modal');  
+    (function(){       
 
       function showModal(event){		
         event.preventDefault();
-        modals.forEach(modal => modal.classList.remove('show'));            
+        params.modals.forEach(modal => modal.classList.remove('show'));            
         
         var outputColor = params.output.getAttribute('class');
 
-        for(var s=0; s<modals.length; s++){     
-          if(modals[s].id === outputColor){        
-              modals[s].classList.add('show');          
+        for(var s=0; s<params.modals.length; s++){     
+          if(params.modals[s].id === outputColor){        
+              params.modals[s].classList.add('show');          
           }
         }
 
@@ -118,8 +118,8 @@ function playerMove(moveId){
       
       document.querySelector('#modal-overlay').addEventListener('click', hideModal);
       
-      for(var i = 0; i < modals.length; i++){
-        modals[i].addEventListener('click', function(event){
+      for(var i = 0; i < params.modals.length; i++){
+        params.modals[i].addEventListener('click', function(event){
           event.stopPropagation();
         });
       }
@@ -134,71 +134,73 @@ function playerMove(moveId){
       }
   } 
   
-    if(params.rounds === params.playerScore) {
-      //params.output.innerHTML += "<br><br> YOU WON THE ENTIRE GAME!!! <br>Game over, please press the <b>New Game</b> button!";      
+    if(params.rounds === params.playerScore) {      
       params.output.style.background = "#9ee585";
       gameOver();
       clickButtonAfterEndGame();             
     }
-    else if(params.rounds === params.computerScore){
-     //params.output.innerHTML += "<br><br> YOU LOST THE ENTIRE GAME :( <br>Game over, please press the <b>New Game</b> button!";
+    else if(params.rounds === params.computerScore){     
       params.output.style.background = "#e25e4f";
       gameOver(); 
       clickButtonAfterEndGame();           
+    }   
+
+    //Score table
+    var roundNumber = function(){
+      for(var r=0; r<=params.rounds; r++){
+        return r;
+      }
     } 
+    var cMove = function(){
+      for(choice=1; choice<4; choice++){
+        var compMove = '';
+    
+        if(choice === 1){
+          compMove = 'papier';    
+        }else if(choice === 2){
+          compMove = 'kamien';    
+        }else if(choice === 3){
+          compMove = 'nozyce';    
+        }
+        return compMove;
+      }
+    } 
+  
+    params.progress = {
+      roundNr: roundNumber,
+      playMove: moveId,
+      compMove: cMove,
+      roundScore: params.output.getAttribute('class'),
+      gameScore: params.playerScore + " : " + params.computerScore
+    };
+  
+    params.clickCount++;
+    console.log(params.clickCount);
+    
+      for(var j=0; j<params.clickCount; j++){      
+        var tr = document.createElement('tr');
+        tr.className = 'tr';
+        params.modals[0].appendChild(tr);
+        //params.modals[1].appendChild(tr);
+
+        // for(var m=0; m<params.modals.length; m++){         
+        //   params.modals[m].appendChild(tr);        
+        // }
+        
+        // for(var z=0; z<5; z++){
+        //   var td = document.createElement('td');
+        //   td.className = 'td';
+        //   tr.appendChild(td);        
+        // }
+        
+      }      
+      
   
 }
 
 for(var i=0; i<params.moves.length; i++){
   params.moves[i].addEventListener('click', function(event){  
     var dataMove = event.target.getAttribute('data-move');
-    playerMove(dataMove);
+    playerMove(dataMove);    
   });
 }
-
-//Modals
-
-// (function(){ 
-	
-// 	var modals = document.querySelectorAll('.modal');
-  
-//   var modalLinks = document.querySelectorAll('.show-modal');
-  
-// 	var showModal = function(event){		
-//     event.preventDefault();
-//     modals.forEach(modal => modal.classList.remove('show'));            
-//     var classFromHref = event.target.getAttribute('href').substr(1);
-   
-//     for(var s=0; s<modals.length; s++){     
-//       if(modals[s].id === classFromHref){        
-//           modals[s].classList.add('show');          
-//       }
-//     }
-// 		document.querySelector('#modal-overlay').classList.add('show');
-// 	};
-	
-		
-// 	for(var i = 0; i < modalLinks.length; i++){
-// 		modalLinks[i].addEventListener('click', showModal);
-// 	}
-	
-// 	var hideModal = function(event){
-// 		event.preventDefault();
-// 		document.querySelector('#modal-overlay').classList.remove('show');
-// 	};
-	
-// 	var closeButtons = document.querySelectorAll('.modal .close');
-	
-// 	for(var i = 0; i < closeButtons.length; i++){
-// 		closeButtons[i].addEventListener('click', hideModal);
-// 	}
-	
-// 	document.querySelector('#modal-overlay').addEventListener('click', hideModal);
-	
-// 	for(var i = 0; i < modals.length; i++){
-// 		modals[i].addEventListener('click', function(event){
-// 			event.stopPropagation();
-// 		});
-// 	}
-
-// })(); 
