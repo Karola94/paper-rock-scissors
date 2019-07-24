@@ -99,15 +99,16 @@ body {
   .modal {
     display: none;    
     max-width: 800px;
-    max-height: 800px;
+    max-height: 600px;
     position: absolute;
     top: 50%;
     left: 50%;
     color: white;
     transform: translate3d(-50%, -50%, 0);
+    overflow: auto;
   
     &.show {
-      display: flex; 
+      display: block; 
       flex-direction: column;     
       align-items: center;
       justify-content: center;
@@ -121,31 +122,36 @@ body {
       color: #000;
       text-decoration: none;
     }    
-    header {        
-      font-size: 20px;
+    header {       
+      font-size: 40px;
       line-height: 30px;
       min-height: 30px;
       font-weight: bold;
-      padding: 0 30px;
+      padding: 100px 30px 30px 30px;
     }
     
     .content {
       min-height: 30px;
+      font-size: 30px;
       padding: 0 20px 30px 20px;        
     } 
-    table {      
-      padding: 0 20px;
+    table {
+      margin: 0 auto 100px auto;      
+      padding: 0 20px;      
       display: table;
-      border-collapse: collapse;
+      border-collapse: collapse;                
 
       thead {
-        th {          
+        background-color: rgba(120, 120, 120, 0.7);
+        th {  
+          min-width: 80px;        
           height: 30px;
           border: 1px solid white;
           padding: 5px;
         } 
       }
-      tbody {
+      tbody {       
+
         tr {
           width: 100%;
           min-height: 10px;

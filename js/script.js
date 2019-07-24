@@ -12,7 +12,9 @@ var params = {
   playerMovesTable: [],
   choice: null,
   compMovesTable: [],
-  compMove: ''
+  compMove: '',
+  roundResult: [],  
+  scoreAfterRound: []
 }
 
 // new game function
@@ -23,9 +25,10 @@ function askNumberOfGames() {
   if(question != null){
     
     document.getElementById('winningGamesNumber').innerHTML = "You have to win " + question + " times.";     
-  }   
-  params.rounds = parseInt(question); 
-  
+  }else if(question == null){
+    location.reload(true); 
+  } 
+  params.rounds = parseInt(question);    
 }
 
 
@@ -39,49 +42,50 @@ function computerMove(){
 function playerMove(moveId){  
   params.output.classList.remove('win', 'draw', 'lose');  
 
-  if(params.choice === 1 && moveId == 'papier'){
+  if(params.choice === 1 && moveId == 'paper'){
     params.output.innerHTML = 'DRAW <br>you played PAPER, computer also played PAPER';    
     params.output.classList.add('draw');
   }
-  else if(params.choice === 1 && moveId == 'kamien'){
+  else if(params.choice === 1 && moveId == 'rock'){
     params.output.innerHTML = 'YOU LOSE <br>you played ROCK, computer played PAPER';    
     params.output.classList.add('lose');
     params.computerScore +=1;    
   }
-  else if(params.choice === 1 && moveId == 'nozyce'){
+  else if(params.choice === 1 && moveId == 'scissors'){
     params.output.innerHTML = 'YOU WON <br>you played SCISSORS, computer played PAPER';   
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(params.choice === 2 && moveId == 'papier'){
+  else if(params.choice === 2 && moveId == 'paper'){
     params.output.innerHTML = 'YOU WON <br>you played PAPER, computer played ROCK';    
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(params.choice === 2 && moveId == 'kamien'){
+  else if(params.choice === 2 && moveId == 'rock'){
     params.output.innerHTML = 'DRAW <br>you played ROCK, computer played ROCK';   
     params.output.classList.add('draw');
   }
-  else if(params.choice === 2 && moveId == 'nozyce'){
+  else if(params.choice === 2 && moveId == 'scissors'){
     params.output.innerHTML = 'YOU LOSE <br>you played SCISSORS, computer played ROCK';    
     params.output.classList.add('lose');
     params.computerScore +=1;   
   }
-  else if(params.choice === 3 && moveId == 'papier'){
+  else if(params.choice === 3 && moveId == 'paper'){
     params.output.innerHTML = 'YOU LOSE <br>you played PAPER, computer played SCISSORS';    
     params.output.classList.add('lose');
     params.computerScore +=1;    
   }
-  else if(params.choice === 3 && moveId == 'kamien'){
+  else if(params.choice === 3 && moveId == 'rock'){
     params.output.innerHTML = 'YOU WON <br>you played ROCK, computer played SCISSORS';
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(params.choice === 3 && moveId == 'nozyce'){
+  else if(params.choice === 3 && moveId == 'scissors'){
     params.output.innerHTML = 'DRAW <br>you played SCISSORS, computer played SCISSORS';
     params.output.classList.add('draw');
   }  
-  params.result.innerHTML = params.playerScore + " : " + params.computerScore; 
+  params.result.innerHTML = params.playerScore + " : " + params.computerScore;
+  params.scoreAfterRound.push(params.result.innerHTML); 
   params.clickCount++    
  
   
@@ -131,29 +135,12 @@ function playerMove(moveId){
       
     })();
 
-
-    //Score table variables
-    
-    // var cMove = function(){
-    //   for(choice=1; choice<4; choice++){
-    //     var compMove = '';
-    
-    //     if(choice === 1){
-    //       compMove = 'papier';    
-    //     }else if(choice === 2){
-    //       compMove = 'kamien';    
-    //     }else if(choice === 3){
-    //       compMove = 'nozyce';    
-    //     }
-    //     return compMove;
-    //   }
-    // } 
-  
+    //Score table variables  
     params.progress = {      
       playMove: params.playerMovesTable,
       compMove: params.compMovesTable,
-      roundScore: params.output.getAttribute('class'),
-      gameScore: params.playerScore + " : " + params.computerScore
+      roundScore: params.roundResult,
+      gameScore: params.scoreAfterRound
     };   
 
     //Score table display
@@ -175,11 +162,11 @@ function playerMove(moveId){
       th.id = 'th'+ h;
       trh.appendChild(th);
     }
-    document.getElementById('th0').innerHTML = 'Nr rundy';
-    document.getElementById('th1').innerHTML = 'Ruch gracza';
-    document.getElementById('th2').innerHTML = 'Ruch komputera';
-    document.getElementById('th3').innerHTML = 'Wynik rundy';
-    document.getElementById('th4').innerHTML = 'Wynik gry po tej rundzie';
+    document.getElementById('th0').innerHTML = 'Round nr';
+    document.getElementById('th1').innerHTML = 'Player move';
+    document.getElementById('th2').innerHTML = 'Computer move';
+    document.getElementById('th3').innerHTML = 'Result';
+    document.getElementById('th4').innerHTML = 'Score';
     
     for(var j=0; j<params.clickCount; j++){      
       var tr = document.createElement('tr'); 
@@ -201,6 +188,10 @@ function playerMove(moveId){
       document.querySelectorAll('tr')[j+1].querySelectorAll('td')[1].innerHTML = params.progress.playMove[j];          
       //computer move display
       document.querySelectorAll('tr')[j+1].querySelectorAll('td')[2].innerHTML = params.progress.compMove[j];
+      //score display
+      document.querySelectorAll('tr')[j+1].querySelectorAll('td')[3].innerHTML = params.progress.roundScore[j];
+      //round score display
+      document.querySelectorAll('tr')[j+1].querySelectorAll('td')[4].innerHTML = params.progress.gameScore[j];
     } 
 
   }
@@ -235,11 +226,11 @@ for(var i=0; i<params.moves.length; i++){
     console.log(params.choice)  ; 
 
     if(params.choice === 1){
-      params.compMove = 'papier';
+      params.compMove = 'paper';
     }else if(params.choice === 2){
-      params.compMove = 'kamien'
+      params.compMove = 'rock'
     }else if(params.choice === 3){
-      params.compMove = 'nozyce'
+      params.compMove = 'scissors'
     }
 
     params.compMovesTable.push(params.compMove);    
@@ -248,7 +239,9 @@ for(var i=0; i<params.moves.length; i++){
     playerMove(dataMove);      
     params.playerMovesTable.push(dataMove);
     console.log('player moves: ' + params.playerMovesTable);
-    
+
+    params.roundResult.push(params.output.className);
+    console.log(params.roundResult);
   });
 }
 
