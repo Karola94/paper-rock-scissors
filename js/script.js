@@ -9,10 +9,13 @@ var params = {
   rounds: null,
   progress: [],
   clickCount: 0,
-  playerMovesTable: []
+  playerMovesTable: [],
+  choice: null,
+  compMovesTable: [],
+  compMove: ''
 }
 
-//Funkcja new game
+// new game function
 function askNumberOfGames() {   
   var question = prompt("How many rounds end the game?", 5);
   document.getElementById('container').style.display="flex";
@@ -26,64 +29,63 @@ function askNumberOfGames() {
 }
 
 
-//Funkcja losująca
+//random function
 function computerMove(){
-  var choice = Math.floor(Math.random()*3+1);  
-  return choice;
+  params.choice = Math.floor(Math.random()*3+1); 
+  return params.choice;  
 }
 
-//Funkcja playerMove
+//playerMove function
 function playerMove(moveId){  
-  params.output.classList.remove('win', 'draw', 'lose');
-  var choice = computerMove();  
-  
+  params.output.classList.remove('win', 'draw', 'lose');  
 
-  if(choice === 1 && moveId == 'papier'){
+  if(params.choice === 1 && moveId == 'papier'){
     params.output.innerHTML = 'DRAW <br>you played PAPER, computer also played PAPER';    
     params.output.classList.add('draw');
   }
-  else if(choice === 1 && moveId == 'kamien'){
+  else if(params.choice === 1 && moveId == 'kamien'){
     params.output.innerHTML = 'YOU LOSE <br>you played ROCK, computer played PAPER';    
     params.output.classList.add('lose');
     params.computerScore +=1;    
   }
-  else if(choice === 1 && moveId == 'nozyce'){
+  else if(params.choice === 1 && moveId == 'nozyce'){
     params.output.innerHTML = 'YOU WON <br>you played SCISSORS, computer played PAPER';   
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(choice === 2 && moveId == 'papier'){
+  else if(params.choice === 2 && moveId == 'papier'){
     params.output.innerHTML = 'YOU WON <br>you played PAPER, computer played ROCK';    
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(choice === 2 && moveId == 'kamien'){
+  else if(params.choice === 2 && moveId == 'kamien'){
     params.output.innerHTML = 'DRAW <br>you played ROCK, computer played ROCK';   
     params.output.classList.add('draw');
   }
-  else if(choice === 2 && moveId == 'nozyce'){
+  else if(params.choice === 2 && moveId == 'nozyce'){
     params.output.innerHTML = 'YOU LOSE <br>you played SCISSORS, computer played ROCK';    
     params.output.classList.add('lose');
     params.computerScore +=1;   
   }
-  else if(choice === 3 && moveId == 'papier'){
+  else if(params.choice === 3 && moveId == 'papier'){
     params.output.innerHTML = 'YOU LOSE <br>you played PAPER, computer played SCISSORS';    
     params.output.classList.add('lose');
     params.computerScore +=1;    
   }
-  else if(choice === 3 && moveId == 'kamien'){
+  else if(params.choice === 3 && moveId == 'kamien'){
     params.output.innerHTML = 'YOU WON <br>you played ROCK, computer played SCISSORS';
     params.output.classList.add('win');
     params.playerScore +=1;    
   }
-  else if(choice === 3 && moveId == 'nozyce'){
+  else if(params.choice === 3 && moveId == 'nozyce'){
     params.output.innerHTML = 'DRAW <br>you played SCISSORS, computer played SCISSORS';
     params.output.classList.add('draw');
   }  
   params.result.innerHTML = params.playerScore + " : " + params.computerScore; 
-  params.clickCount++ 
+  params.clickCount++    
+ 
   
-  //Funkcja gameOver
+  //gameOver function
   function gameOver() {
     params.moves.forEach(move => move.setAttribute('disabled', 'true'));   
     params.container.classList.add('endGame');   
@@ -132,24 +134,24 @@ function playerMove(moveId){
 
     //Score table variables
     
-    var cMove = function(){
-      for(choice=1; choice<4; choice++){
-        var compMove = '';
+    // var cMove = function(){
+    //   for(choice=1; choice<4; choice++){
+    //     var compMove = '';
     
-        if(choice === 1){
-          compMove = 'papier';    
-        }else if(choice === 2){
-          compMove = 'kamien';    
-        }else if(choice === 3){
-          compMove = 'nozyce';    
-        }
-        return compMove;
-      }
-    } 
+    //     if(choice === 1){
+    //       compMove = 'papier';    
+    //     }else if(choice === 2){
+    //       compMove = 'kamien';    
+    //     }else if(choice === 3){
+    //       compMove = 'nozyce';    
+    //     }
+    //     return compMove;
+    //   }
+    // } 
   
     params.progress = {      
       playMove: params.playerMovesTable,
-      compMove: cMove,
+      compMove: params.compMovesTable,
       roundScore: params.output.getAttribute('class'),
       gameScore: params.playerScore + " : " + params.computerScore
     };   
@@ -193,31 +195,30 @@ function playerMove(moveId){
           }          
         }                      
       }
-      //Wyświetlanie numeru rundy     
+      //Round number display     
       document.querySelectorAll('tr')[j+1].querySelectorAll('td')[0].innerHTML = j+1;   
-      //Wyświetlanie ruchu gracza
+      //Player move display
       document.querySelectorAll('tr')[j+1].querySelectorAll('td')[1].innerHTML = params.progress.playMove[j];          
+      //computer move display
+      document.querySelectorAll('tr')[j+1].querySelectorAll('td')[2].innerHTML = params.progress.compMove[j];
     } 
-    
 
-
-    
   }
   
-  //Funkcja resetująca grę
+  //Reset game function
   function clickButtonAfterEndGame() {      
       document.getElementById('new-game').onclick = function(){
         location.reload(true);        
       }
   } 
   
-  //Warunki zakończenia gry:
-    //wygrana gracza
+  //Game over conditions:
+    //player wins
     if(params.rounds === params.playerScore) {      
       params.output.style.background = "#9ee585";
       gameOver();
       clickButtonAfterEndGame();             
-    } //wygrana komputera
+    } //computer wins
     else if(params.rounds === params.computerScore){     
       params.output.style.background = "#e25e4f";
       gameOver(); 
@@ -226,13 +227,28 @@ function playerMove(moveId){
   
 }   
 
-//OnClick event na buttonach papier,kamien, nozyce 
+//OnClick event on buttons: paper, rock, scissors 
 for(var i=0; i<params.moves.length; i++){
   params.moves[i].addEventListener('click', function(event){  
     var dataMove = event.target.getAttribute('data-move');
-    playerMove(dataMove);  
+    computerMove(); 
+    console.log(params.choice)  ; 
+
+    if(params.choice === 1){
+      params.compMove = 'papier';
+    }else if(params.choice === 2){
+      params.compMove = 'kamien'
+    }else if(params.choice === 3){
+      params.compMove = 'nozyce'
+    }
+
+    params.compMovesTable.push(params.compMove);    
+    console.log('computer moves: ' + params.compMovesTable);
+
+    playerMove(dataMove);      
     params.playerMovesTable.push(dataMove);
-    console.log(params.playerMovesTable);   
+    console.log('player moves: ' + params.playerMovesTable);
+    
   });
 }
 
