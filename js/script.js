@@ -8,7 +8,8 @@ var params = {
   computerScore: 0,
   rounds: null,
   progress: [],
-  clickCount: 0
+  clickCount: 0,
+  playerMovesTable: []
 }
 
 //Funkcja new game
@@ -18,7 +19,7 @@ function askNumberOfGames() {
   
   if(question != null){
     
-    document.getElementById('winningGamesNumber').innerHTML = "You have " + question + " rounds.";     
+    document.getElementById('winningGamesNumber').innerHTML = "You have to win " + question + " times.";     
   }   
   params.rounds = parseInt(question); 
   
@@ -82,6 +83,7 @@ function playerMove(moveId){
   params.result.innerHTML = params.playerScore + " : " + params.computerScore; 
   params.clickCount++ 
   
+  //Funkcja gameOver
   function gameOver() {
     params.moves.forEach(move => move.setAttribute('disabled', 'true'));   
     params.container.classList.add('endGame');   
@@ -127,6 +129,31 @@ function playerMove(moveId){
       
     })();
 
+
+    //Score table variables
+    
+    var cMove = function(){
+      for(choice=1; choice<4; choice++){
+        var compMove = '';
+    
+        if(choice === 1){
+          compMove = 'papier';    
+        }else if(choice === 2){
+          compMove = 'kamien';    
+        }else if(choice === 3){
+          compMove = 'nozyce';    
+        }
+        return compMove;
+      }
+    } 
+  
+    params.progress = {      
+      playMove: params.playerMovesTable,
+      compMove: cMove,
+      roundScore: params.output.getAttribute('class'),
+      gameScore: params.playerScore + " : " + params.computerScore
+    };   
+
     //Score table display
     var table = document.createElement('table');
     var thead = document.createElement('thead');
@@ -153,77 +180,59 @@ function playerMove(moveId){
     document.getElementById('th4').innerHTML = 'Wynik gry po tej rundzie';
     
     for(var j=0; j<params.clickCount; j++){      
-      var tr = document.createElement('tr');            
+      var tr = document.createElement('tr'); 
+      tr.id = 'tr' + j;           
 
       for(var m=0; m<params.modals.length; m++){         
         if(params.modals[m].id === outputColor){
           tbody.appendChild(tr); 
 
           for(var z=0; z<5; z++){
-            var td = document.createElement('td');            
-            tr.appendChild(td);        
-          }
-        }              
-      }     
-      
+            var td = document.createElement('td');                      
+            tr.appendChild(td);           
+          }          
+        }                      
+      }
+      //Wyświetlanie numeru rundy     
+      document.querySelectorAll('tr')[j+1].querySelectorAll('td')[0].innerHTML = j+1;   
+      //Wyświetlanie ruchu gracza
+      document.querySelectorAll('tr')[j+1].querySelectorAll('td')[1].innerHTML = params.progress.playMove[j];          
     } 
+    
+
+
     
   }
   
+  //Funkcja resetująca grę
   function clickButtonAfterEndGame() {      
       document.getElementById('new-game').onclick = function(){
         location.reload(true);        
       }
   } 
   
+  //Warunki zakończenia gry:
+    //wygrana gracza
     if(params.rounds === params.playerScore) {      
       params.output.style.background = "#9ee585";
       gameOver();
       clickButtonAfterEndGame();             
-    }
+    } //wygrana komputera
     else if(params.rounds === params.computerScore){     
       params.output.style.background = "#e25e4f";
       gameOver(); 
       clickButtonAfterEndGame();           
-    }   
-
-    //Score table variables
-    var roundNumber = function(){
-      for(var r=0; r<=params.rounds; r++){
-        return r;
-      }
-    } 
-    var cMove = function(){
-      for(choice=1; choice<4; choice++){
-        var compMove = '';
-    
-        if(choice === 1){
-          compMove = 'papier';    
-        }else if(choice === 2){
-          compMove = 'kamien';    
-        }else if(choice === 3){
-          compMove = 'nozyce';    
-        }
-        return compMove;
-      }
-    } 
-  
-    params.progress = {
-      roundNr: roundNumber,
-      playMove: moveId,
-      compMove: cMove,
-      roundScore: params.output.getAttribute('class'),
-      gameScore: params.playerScore + " : " + params.computerScore
-    };    
+    }      
   
 }   
 
-
+//OnClick event na buttonach papier,kamien, nozyce 
 for(var i=0; i<params.moves.length; i++){
   params.moves[i].addEventListener('click', function(event){  
     var dataMove = event.target.getAttribute('data-move');
     playerMove(dataMove);  
-    console.log(params.clickCount);   
+    params.playerMovesTable.push(dataMove);
+    console.log(params.playerMovesTable);   
   });
 }
 
