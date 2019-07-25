@@ -1,190 +1,57 @@
-body {
-  padding: 10px;
-  text-align: center;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  box-sizing: content-box;
-}
+body { padding: 10px; text-align: center; -ms-flex-direction: column; flex-direction: column; display: -ms-flexbox; display: flex; -ms-flex-pack: center; justify-content: center; -ms-flex-wrap: wrap; flex-wrap: wrap; box-sizing: content-box; }
 
-body .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  display: none;
-  padding: 20px 0;
-  max-width: 500px;
-}
+body .container { display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; -ms-flex-pack: center; justify-content: center; display: none; padding: 20px 0; max-width: 500px; }
 
-body .container .wrapper {
-  width: 100%;
-  justify-content: center;
-  text-align: center;
-  display: flex;
-}
+body .container .wrapper { width: 100%; -ms-flex-pack: center; justify-content: center; text-align: center; display: -ms-flexbox; display: flex; }
 
-body .container .wrapper button {
-  margin: 20px;
-}
+body .container .wrapper button { margin: 20px; }
 
-body .container .wrapper #output {
-  max-width: 500px;
-  padding: 25px;
-  font-weight: bold;
-  min-width: 416px;
-}
+body .container .wrapper #output { max-width: 500px; padding: 25px; font-weight: bold; min-width: 416px; }
 
-body .container .wrapper .win {
-  border: 3px dashed green;
-  background: #efefef;
-}
+body .container .wrapper .win { border: 3px dashed green; background: #efefef; }
 
-body .container .wrapper .draw {
-  border: 3px dashed yellow;
-  background: #efefef;
-}
+body .container .wrapper .draw { border: 3px dashed yellow; background: #efefef; }
 
-body .container .wrapper .lose {
-  border: 3px dashed red;
-  background: #efefef;
-}
+body .container .wrapper .lose { border: 3px dashed red; background: #efefef; }
 
-body .container .wrapper #result {
-  margin: 10px;
-  font-size: 40px;
-}
+body .container .wrapper #result { margin: 10px; font-size: 40px; }
 
-body .container .wrapper .score {
-  position: absolute;
-  background-color: #30e5cd;
-  padding: 3px;
-}
+body .container .wrapper .score { position: absolute; background-color: #30e5cd; padding: 3px; }
 
-body .container .wrapper #userScore {
-  transform: translateY(-50%);
-  top: 50%;
-  left: -20px;
-}
+body .container .wrapper #userScore { transform: translateY(-50%); top: 50%; left: -20px; }
 
-body .container .wrapper #compScore {
-  transform: translateY(-50%);
-  top: 50%;
-  right: -25px;
-}
+body .container .wrapper #compScore { transform: translateY(-50%); top: 50%; right: -25px; }
 
-body .container .scoreBoard {
-  position: relative;
-  border: 2px solid grey;
-  max-width: 200px;
-  padding: 10px 0;
-  border-radius: 5px;
-  margin: 20px 0;
-  background: #dcefed;
-  font-weight: bold;
-  min-height: 104px;
-}
+body .container .scoreBoard { position: relative; border: 2px solid grey; max-width: 200px; padding: 10px 0; border-radius: 5px; margin: 20px 0; background: #dcefed; font-weight: bold; min-height: 104px; }
 
-body .endGame {
-  background: rgba(2, 2, 2, 0.3);
-}
+body .endGame { background: rgba(2, 2, 2, 0.3); }
 
-body button {
-  margin: 20px;
-}
+body button { margin: 20px; }
 
-body .overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-}
+body .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); }
 
-body .overlay.show {
-  display: block;
-}
+body .overlay.show { display: block; }
 
-body .modal {
-  display: none;
-  max-width: 800px;
-  max-height: 600px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: white;
-  transform: translate3d(-50%, -50%, 0);
-  overflow: auto;
-}
+body .modal { display: none; max-width: 800px; max-height: 600px; position: absolute; top: 50%; left: 50%; color: white; transform: translate3d(-50%, -50%, 0); overflow: auto; }
 
-body .modal.show {
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+body .modal.show { display: block; -ms-flex-direction: column; flex-direction: column; -ms-flex-align: center; align-items: center; -ms-flex-pack: center; justify-content: center; }
 
-body .modal .close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 5px;
-  color: #000;
-  text-decoration: none;
-}
+body .modal .close { position: absolute; right: 0; top: 0; padding: 5px; color: #000; text-decoration: none; }
 
-body .modal header {
-  font-size: 40px;
-  line-height: 30px;
-  min-height: 30px;
-  font-weight: bold;
-  padding: 100px 30px 30px 30px;
-}
+body .modal header { font-size: 40px; line-height: 30px; min-height: 30px; font-weight: bold; padding: 100px 30px 30px 30px; }
 
-body .modal .content {
-  min-height: 30px;
-  font-size: 30px;
-  padding: 0 20px 30px 20px;
-}
+body .modal .content { min-height: 30px; font-size: 30px; padding: 0 20px 30px 20px; }
 
-body .modal table {
-  margin: 0 auto 100px auto;
-  padding: 0 20px;
-  display: table;
-  border-collapse: collapse;
-}
+body .modal table { margin: 0 auto 100px auto; padding: 0 20px; display: table; border-collapse: collapse; }
 
-body .modal table thead {
-  background-color: rgba(120, 120, 120, 0.7);
-}
+body .modal table thead { background-color: rgba(120, 120, 120, 0.7); }
 
-body .modal table thead th {
-  min-width: 80px;
-  height: 30px;
-  border: 1px solid white;
-  padding: 5px;
-}
+body .modal table thead th { min-width: 80px; height: 30px; border: 1px solid white; padding: 5px; }
 
-body .modal table tbody tr {
-  width: 100%;
-  min-height: 10px;
-  min-width: 100px;
-}
+body .modal table tbody tr { width: 100%; min-height: 10px; min-width: 100px; }
 
-body .modal table tbody tr td {
-  height: 20px;
-  border: 1px solid white;
-  padding: 5px;
-}
+body .modal table tbody tr td { height: 20px; border: 1px solid white; padding: 5px; }
 
-body .win {
-  background: rgba(0, 128, 0, 0.3);
-}
+body .win { background: rgba(0, 128, 0, 0.3); }
 
-body .lose {
-  background: rgba(255, 0, 0, 0.3);
-}
-
-/*# sourceMappingURL=style.css.map */
+body .lose { background: rgba(255, 0, 0, 0.3); }

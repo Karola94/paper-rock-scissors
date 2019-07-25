@@ -46,21 +46,21 @@ function playerMove(moveId){
     'rock': 3,
     'scissors': 1
   };
-
-  if (winObj[moveId] == params.choice) {
+  
+  if (winObj[moveId] === params.choice) {
     console.log('win')
-    params.output.innerHTML = 'YOU WON <br>you played SCISSORS, computer played PAPER';
+    params.output.innerHTML = 'YOU WON <br>you played '+moveId.toUpperCase()+', computer played '+params.compMove.toUpperCase();
     params.output.classList.add('win');
     params.playerScore +=1;
-  } else if (compObj[params.choice - 1] == moveId) {
+  } else if (compObj[params.choice-1] === moveId) {
     console.log('draw');
-    params.output.innerHTML = 'YOU LOSE <br>you played ROCK, computer played PAPER';
-    params.output.classList.add('lose');
-    params.computerScore +=1;
+    params.output.innerHTML = 'DRAW <br>you played '+moveId.toUpperCase()+', computer also played '+params.compMove.toUpperCase();
+    params.output.classList.add('draw');    
   } else {
     console.log('lose');
-    params.output.innerHTML = 'DRAW <br>you played PAPER, computer also played PAPER';
-    params.output.classList.add('draw');
+    params.output.innerHTML = 'YOU LOSE <br>you played '+moveId.toUpperCase()+', computer played '+params.compMove.toUpperCase();
+    params.output.classList.add('lose');
+    params.computerScore +=1;
   }
 
   params.roundResult.push(params.output.className);
